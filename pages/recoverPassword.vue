@@ -62,7 +62,7 @@
 </template>
 <script>
 import localStorage from "localStorage";
-import { generateQR, schedule } from "../server/index";
+import { recoverPassword } from "../server/index";
 export default {
   name: "recoverPassword",
   data() {
@@ -101,19 +101,24 @@ export default {
       this.$refs[name].validate(valid => {
         if (valid) {
           this.loading = true;
-          this.$Notice.success({
-            title: "Revise su correo",
-            desc: "Un correo llegará a su cuenta para recuperar su password"
-          });
-          this.loading = false;
-          this.recoverForm.email = "";
+          recoverPassword(this.recoverForm)
+            .then(res => {
+              this.$Notice.success({
+                title: "Revise su correo",
+                desc: "Un correo llegará a su cuenta para recuperar su password"
+              });
+              this.recoverForm.email = "";
+            })
+            .catch(err => {
+              this.$Notice.error({ title: "Revise los datos ingresados" });
+            })
+            .finally(() => {
+              this.loading = false;
+            });
         } else {
           this.$Notice.error({ title: "Revise los datos ingresados" });
         }
       });
-    },
-    setHour(val) {
-      localStorage.setItem("hour", val);
     }
   }
 };

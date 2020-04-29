@@ -88,5 +88,28 @@ export const generateQR = async (turn, token) => {
   }
 }
 
+export const recoverPassword = async (email) => {
+  try {
+    const res = await api.post(`https://5las.renatocenteno.com/auth/recover-password`, email)
+    return res
+  } catch (error) {
+    return error
+  }
+}
+
+export const resetPassword = async (token, password) => {
+  const auth = {
+    password: password,
+    token: token,
+  }
+  try {
+    Object.assign(api.defaults, { headers: { Authorization: `Bearer ${token}` } })
+    const res = await api.post(`https://5las.renatocenteno.com/auth/reset-password`, auth)
+    return res
+  } catch (error) {
+    return error
+  }
+}
+
 export default api
 
