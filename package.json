@@ -16,7 +16,7 @@
     "axios": "^0.19.2",
     "cross-env": "^5.2.0",
     "epic-spinners": "^1.1.0",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "global": "^4.4.0",
     "iview": "^3.1.5",
     "jwt-decode": "^2.2.0",
